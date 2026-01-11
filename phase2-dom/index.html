@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 2 - DOM & Browser APIs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode {
+            background-color: #1a1a2e;
+            color: #eaeaea;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+        }
+        .modal.dark-mode {
+            background: #16213e;
+        }
+        #todoList li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f0f0f0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        body.dark-mode #todoList li {
+            background: #16213e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="mainTitle">Phase 2 - DOM & Browser APIs</h1>
+
+        <div class="section">
+            <h3>1. Change H1 Text</h3>
+            <button onclick="changeTitle()">Change Title</button>
+        </div>
+
+        <div class="section">
+            <h3>2. Change Background Color</h3>
+            <button onclick="changeBackground()">Change Background</button>
+        </div>
+
+        <div class="section">
+            <h3>3. Dynamic List</h3>
+            <ul id="dynamicList">
+                <li>Item 1</li>
+                <li>Item 2</li>
+            </ul>
+            <button onclick="addListItem()">Add Item</button>
+        </div>
+
+        <div class="section">
+            <h3>4. Show/Hide Text</h3>
+            <p id="toggleText">This text can be hidden!</p>
+            <button onclick="toggleVisibility()">Show/Hide</button>
+        </div>
+
+        <div class="section">
+            <h3>5. Form Prevention</h3>
+            <form id="sampleForm">
+                <input type="text" placeholder="Enter something...">
+                <button type="submit">Submit (prevented)</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h3>6. Stopwatch</h3>
+            <p id="stopwatchDisplay">00:00:00</p>
+            <button onclick="startStopwatch()">Start</button>
+            <button onclick="stopStopwatch()">Stop</button>
+            <button onclick="resetStopwatch()">Reset</button>
+        </div>
+
+        <div class="section">
+            <h3>7. Image Hover</h3>
+            <img id="hoverImage" src="https://via.placeholder.com/150/3498db/ffffff?text=Hover+Me"
+                 alt="Hover Image" style="cursor: pointer;">
+        </div>
+
+        <div class="section">
+            <h3>8-9. setTimeout & setInterval</h3>
+            <button onclick="delayedAlert()">Alert after 3 seconds</button>
+            <p>Clock: <span id="clock"></span></p>
+        </div>
+
+        <div class="section">
+            <h3>10-13. Fetch & Async/Await</h3>
+            <button onclick="fetchData()">Fetch User Data</button>
+            <p id="loadingIndicator" class="hidden">Loading...</p>
+            <div id="fetchResult"></div>
+        </div>
+
+        <div class="section">
+            <h3>14. Real-time Input</h3>
+            <input type="text" id="realtimeInput" placeholder="Type something...">
+            <p>Output: <span id="realtimeOutput"></span></p>
+        </div>
+
+        <div class="section">
+            <h3>15-16. CSS Class & Dark Mode</h3>
+            <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        </div>
+
+        <div class="section">
+            <h3>17. Modal Window</h3>
+            <button onclick="openModal()">Open Modal</button>
+        </div>
+
+        <div class="section">
+            <h3>18. Todo List</h3>
+            <input type="text" id="todoInput" placeholder="New task...">
+            <button onclick="addTodo()">Add</button>
+            <ul id="todoList"></ul>
+        </div>
+
+        <div class="section">
+            <h3>19-20. LocalStorage</h3>
+            <input type="text" id="storageInput" placeholder="Data to save...">
+            <button onclick="saveToStorage()">Save</button>
+            <button onclick="loadFromStorage()">Load</button>
+            <p>Stored: <span id="storageOutput"></span></p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <h2>Modal Window</h2>
+            <p>This is a modal popup!</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
